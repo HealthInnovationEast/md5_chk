@@ -37,4 +37,6 @@ Expect these to have a default behaviour if not defined
 
 Where to write the final result file `md5_results.txt`.
 
-This is the raw stdout from each `md5sum -c file.md5 file` command.  Find problem files with `grep -v ': OK$' md5_results.txt`
+This is the raw stdout from each `md5sum -c file.md5 file` command prefixed with the `sample` column.
+
+Find problem files with `grep -v ': OK$' md5_results.txt`
