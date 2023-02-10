@@ -57,9 +57,8 @@ process check_md5 {
         """
         # md5 checksum files without a line feed are not accepted
         (cat ${chksum} && echo) | tr -s '\n' > tmp.chk
-        # hide failures so we can combine at end
         echo -ne "${sample}\t"
-        md5sum -c tmp.chk || true
+        md5sum -c tmp.chk
         """
 }
 
