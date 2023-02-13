@@ -1,20 +1,17 @@
-# template-nf
+# md5_chk
 
-This is a template project to be used when creating nextflow for CYNAPSE projects.
+Simple distributed md5 of files.
 
-## Using the template
+## Workflow details
 
-Nextflow items to be changed:
+The workflow simply runs md5sum in check mode on validation pair provided recording the result to a final manifest.
 
-- `main.nf`
-  - Usage block URL updates
-  - Search for `Header log info`, add params
-  - Define processes and tie together in workflow
-- `nextflow.config`
-  - URLs
-  - Versions
-  - Container references (in process resource section)
-  - Addition of params & defaults
-- `docs/Usage.md`
-- `conf/test.config`
-  - As appropriate for your example exec
+- A successful workflow will generate an output including the results of `md5sum`.
+- Failing workflows are resumable once the problem file has been addressed.
+
+See [Usage](docs/Usage.md) for arguments.
+
+### Resume
+
+You should always run this workflow as resumable mode on CloudOS so that it is possible to correct a problem file
+and restart the processing.  This minimises costs by not re-processing the sucessful verification.
