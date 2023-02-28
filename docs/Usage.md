@@ -1,14 +1,12 @@
 # Usage <!-- omit in toc -->
 
-All links here are pinned to the version of XXXX that this nextflow has been created for.
-
-NOTE: This workflow will complete successfully even when files are corrupt, you need to review the output report with:
+NOTE: All workflow executions are anticipated to run to completion, capturing the output of `md5sum` into a report format.
 
 ```bash
 grep -vP '\t0$' results/md5_results.txt
 ```
 
-This will return the deader and any failed items.
+This will return the header and any failed items.
 
 - [Required args](#required-args)
   - [`--check`](#--check)
