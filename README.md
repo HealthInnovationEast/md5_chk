@@ -6,12 +6,23 @@ Simple distributed md5 of files.
 
 The workflow simply runs md5sum in check mode on validation pair provided recording the result to a final manifest.
 
-- A successful workflow will generate an output including the results of `md5sum`.
-- Failing workflows are resumable once the problem file has been addressed.
+All workflow executions are anticipated to run to completion, capturing the output of `md5sum` into a report format.
+
+The report needs to be reviewed with:
+
+```bash
+grep -vP '\t0$' results/md5_results.txt
+```
+
+This will return the header and any failed items e.g.
+
+```TSV
+Sample	STDOUT	STDERR	EXIT_CODE
+Bad	Bad.file: FAILED	md5sum: WARNING: 1 computed checksum did NOT match	1
+```
 
 See [Usage](docs/Usage.md) for arguments.
 
 ### Resume
 
-You should always run this workflow as resumable mode on CloudOS so that it is possible to correct a problem file
-and restart the processing.  This minimises costs by not re-processing the sucessful verification.
+Resume is not recommended for this process when running on CloudOS due to potential for large data persistence.

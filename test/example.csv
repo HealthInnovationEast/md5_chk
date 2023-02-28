@@ -1,3 +1,4 @@
 sample,primary,chksum
 A,test/A.file,test/A.file.md5
 B,test/B.file,test/B.file.md5
+Bad,test/Bad.file,test/Bad.file.md5
