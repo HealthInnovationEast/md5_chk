@@ -14,7 +14,12 @@ jobs:
       # On validates flow:
       #   Confirms workflow is valid
       #   Confirms all containers are available
-      - name: Validate workflow
-        # replace with command to execute sample
-        run: |
-          nextflow -version
+      - run: |
+          nextflow run main.nf -stub --check test/example.csv
+          # expect lines to pass
+          grep -c '\t0$' results/md5_results.txt
+      - run: |
+          nextflow run main.nf --check test/example.csv
+          # expect both pass and fail
+          grep -c '\t0$' results/md5_results.txt
+          grep -c '\t1$' results/md5_results.txt
