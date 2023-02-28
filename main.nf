@@ -47,18 +47,26 @@ process check_md5 {
 
     shell = ['/bin/bash', '-euo', 'pipefail']
 
-    // this just creates files required to allow testing of a structure
+    // this just creates stdout required to allow flow
     stub:
         """
-        touch ${sample}_${primary}.checked
+        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
+        echo -e "${sample}\tBlah out\tBlah err\t0"
         """
 
     script:
         """
         # md5 checksum files without a line feed are not accepted
         (cat ${chksum} && echo) | tr -s '\n' > tmp.chk
-        echo -ne "${sample}\t"
-        md5sum -c tmp.chk
+
+        set +e
+        md5sum -c tmp.chk 2> stderr 1> stdout
+        EXIT_CODE=\$?
+        set -e
+        STDOUT=\$(cat stdout)
+        STDERR=\$(cat stderr)
+        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
+        echo -e "${sample}\t\$STDOUT\t\$STDERR\t\$EXIT_CODE"
         """
 }
 
@@ -67,5 +75,5 @@ workflow {
     chk_map = checks.splitCsv(header: true).map { row -> tuple(row.sample, file(row.primary), file(row.chksum)) }
 
     main:
-        check_md5(chk_map).collectFile(name: 'md5_results.txt', newLine: false, storeDir: params.outdir)
+        check_md5(chk_map).collectFile(name: 'md5_results.txt', newLine: false, storeDir: params.outdir, keepHeader: true)
 }
