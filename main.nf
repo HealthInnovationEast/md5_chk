@@ -56,6 +56,7 @@ process check_md5 {
 
     script:
         """
+        set -x
         # md5 checksum files without a line feed are not accepted
         (cat ${chksum} && echo) | tr -s '\n' > tmp.chk
 
