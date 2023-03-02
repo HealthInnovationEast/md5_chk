@@ -50,8 +50,8 @@ process check_md5 {
     // this just creates stdout required to allow flow
     stub:
         """
-        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
-        echo -e "${sample}\tBlah out\tBlah err\t0"
+        echo -e "Sample\tOUTPUT"
+        echo -e "${sample}\tBlah out"
         """
 
     script:

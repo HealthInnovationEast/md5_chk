@@ -17,9 +17,9 @@ jobs:
       - run: |
           nextflow run main.nf -stub --check test/example.csv
           # expect lines to pass
-          grep -cP '\t0$' results/md5_results.txt
+          grep -cP ' OK$' results/md5_results.txt
       - run: |
           nextflow run main.nf --check test/example.csv
           # expect both pass and fail lines
-          grep -cP '\t0$' results/md5_results.txt
-          grep -cP '\t1$' results/md5_results.txt
+          grep -cP ' OK$' results/md5_results.txt
+          grep -cP ' FAILED$' results/md5_results.txt
