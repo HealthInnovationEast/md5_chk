@@ -59,16 +59,9 @@ process check_md5 {
         # md5 checksum files without a line feed are not accepted
         (cat ${chksum} && echo) | tr -s '\n' > tmp.chk
 
-        set +e
-        md5sum -c tmp.chk > stdout 2> stderr
-        EXIT_CODE=\$?
-        set -e
-        STDERR=\$(cat stderr)
-        >&2 echo "STDERR: \$STDERR"
-        STDOUT=\$(cat stdout)
-        >&2 echo "STDOUT: \$STDOUT"
-        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
-        echo -e "${sample}\t\$STDOUT\t\$STDERR\t\$EXIT_CODE"
+        echo -e "Sample\tOUTPUT"
+        echo -en "${sample}\t"
+        md5sum -c tmp.chk || true
         """
 }
 
