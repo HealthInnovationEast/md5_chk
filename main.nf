@@ -51,7 +51,7 @@ process check_md5 {
     stub:
         """
         echo -e "Sample\tOUTPUT"
-        echo -e "${sample}\tBlah out"
+        echo -e "${sample}\tBlah out: OK"
         """
 
     script:
