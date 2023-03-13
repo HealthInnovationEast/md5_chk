@@ -26,3 +26,8 @@ See [Usage](docs/Usage.md) for arguments.
 ### Resume
 
 Resume is not recommended for this process when running on CloudOS due to potential for large data persistence.
+
+## Release process
+
+1. Updated version in `nextflow.config`
+1. Detail changes in `CHANGES.md`
