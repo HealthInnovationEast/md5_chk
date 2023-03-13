@@ -50,8 +50,8 @@ process check_md5 {
     // this just creates stdout required to allow flow
     stub:
         """
-        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
-        echo -e "${sample}\tBlah out\tBlah err\t0"
+        echo -e "Sample\tOUTPUT"
+        echo -e "${sample}\tBlah out: OK"
         """
 
     script:
@@ -59,14 +59,9 @@ process check_md5 {
         # md5 checksum files without a line feed are not accepted
         (cat ${chksum} && echo) | tr -s '\n' > tmp.chk
 
-        set +e
-        md5sum -c tmp.chk 2> stderr 1> stdout
-        EXIT_CODE=\$?
-        set -e
-        STDOUT=\$(cat stdout)
-        STDERR=\$(cat stderr)
-        echo -e "Sample\tSTDOUT\tSTDERR\tEXIT_CODE"
-        echo -e "${sample}\t\$STDOUT\t\$STDERR\t\$EXIT_CODE"
+        echo -e "Sample\tOUTPUT"
+        echo -en "${sample}\t"
+        md5sum -c tmp.chk || true
         """
 }
 
